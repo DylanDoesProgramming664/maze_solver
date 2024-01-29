@@ -1,4 +1,4 @@
-from tkinter import Tk, BOTH, Canvas
+from tkinter import Tk, BOTH, Canvas, Button
 
 
 class Point:
@@ -29,6 +29,12 @@ class Window:
                                height=height, width=width)
         self.__canvas.pack(fill=BOTH, expand=1)
         self.__running = False
+        self.__exit_button = Button(
+            self.__root,
+            text="Exit",
+            command=self.close,
+        )
+        self.__exit_button.pack(anchor="center")
         self.__root.protocol("WM_DELETE_WINDOW", self.close)
 
     def draw_line(self, line: Line, fill_color: str = "black"):
