@@ -105,6 +105,16 @@ class Maze:
         if i == len(self._cells) - 1 and j == len(self._cells[i]) - 1:
             return True
 
+        if j < len(self._cells[i]) - 1 \
+                and not self._cells[i][j+1].visited \
+                and not self._cells[i][j].has_bottom_wall:
+            self._cells[i][j].draw_move(self._cells[i][j+1])
+            res = self._solve_r(i, j + 1)
+            if res:
+                return True
+            else:
+                self._cells[i][j].draw_move(self._cells[i][j+1], undo=True)
+
         if i < len(self._cells) - 1 \
                 and not self._cells[i+1][j].visited \
                 and not self._cells[i][j].has_right_wall:
@@ -124,16 +134,6 @@ class Maze:
                 return True
             else:
                 self._cells[i][j].draw_move(self._cells[i-1][j], undo=True)
-
-        if j < len(self._cells[i]) - 1 \
-                and not self._cells[i][j+1].visited \
-                and not self._cells[i][j].has_bottom_wall:
-            self._cells[i][j].draw_move(self._cells[i][j+1])
-            res = self._solve_r(i, j + 1)
-            if res:
-                return True
-            else:
-                self._cells[i][j].draw_move(self._cells[i][j+1], undo=True)
 
         if j > 0 \
                 and not self._cells[i][j-1].visited \
